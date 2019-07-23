@@ -1,5 +1,6 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
+- id: 'Build app image'
+  name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo', '.' ]
 images:
 - 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo'
