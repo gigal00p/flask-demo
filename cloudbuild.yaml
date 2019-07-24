@@ -4,3 +4,16 @@ steps:
   args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo', '.' ]
 images:
 - 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo'
+
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - set
+  - image
+  - deployment
+  - deployment/mydeployment
+  - gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=us-west1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
+  waitFor: ['Build app image']
