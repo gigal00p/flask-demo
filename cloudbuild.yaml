@@ -1,11 +1,11 @@
 steps:
 - id: 'Build app image'
   name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo', '.' ]
+  args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$REVISION_ID', '.' ]
 
 - id: 'Push image to the registry'
   name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo"]
+  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$REVISION_ID"]
   waitFor: ['Build app image']
 
 - id: 'Deploy app image to the cluster'
@@ -14,7 +14,7 @@ steps:
   - 'set'
   - 'image'
   - 'pod/terraform-flask'
-  - 'flask-demo=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
+  - 'flask-demo=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$REVISION_ID'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-west1-a'
   - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
