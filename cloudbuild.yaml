@@ -13,7 +13,7 @@ steps:
   args:
   - 'set'
   - 'image'
-  - 'deployment/terraform-flask'
+  - 'deployment/flask-deployment'
   - 'my-container=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-west1-a'
