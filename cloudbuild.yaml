@@ -14,7 +14,7 @@ steps:
   - 'set'
   - 'image'
   - 'deployment/flask-deployment'
-  - 'my-container=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
+  - 'flask-demo=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-west1-a'
   - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
