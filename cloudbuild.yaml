@@ -8,12 +8,11 @@ steps:
   args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo"]
   waitFor: ['Build app image']
 
-- id: 'Depl'
+- id: 'Deploy app image to the cluster'
   name: 'gcr.io/cloud-builders/kubectl'
   args:
   - 'set'
   - 'image'
-  - 'deployment'
   - 'deployment/mydeployment'
   - 'my-container=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
   env:
