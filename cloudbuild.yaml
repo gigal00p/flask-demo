@@ -3,8 +3,9 @@ steps:
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo', '.' ]
 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$REVISION_ID"]
+- name: 'Push iamge to the registry'
+  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo"]
+  waitFor: ['Build app image']
 
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
@@ -16,4 +17,4 @@ steps:
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=us-west1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
-  waitFor: ['Build app image']
+  waitFor: ['Push iamge to the registry']
