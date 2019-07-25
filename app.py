@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    html = "<h1>Welcome to kubełki dear user!</h1>"
+    html = "<h1>Welcome to cloud dear user!</h1>"
     return html
 
 if __name__ == "__main__":
