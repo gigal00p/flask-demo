@@ -16,6 +16,6 @@ steps:
   - 'pod/terraform-flask'
   - 'flask-demo=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA'
   env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-west1-a'
+  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
   waitFor: ['Push image to the registry']
