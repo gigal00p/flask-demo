@@ -23,4 +23,4 @@ steps:
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
-  waitFor: ['Push image to the registry']
+  waitFor: ['Push latest image to the registry']
