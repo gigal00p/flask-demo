@@ -3,7 +3,12 @@ steps:
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest', '.']
 
-- id: 'Push image to the registry'
+- id: 'Push image with SHA to the registry'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA"]
+  waitFor: ['Build app image']
+
+- id: 'Push latest image to the registry'
   name: 'gcr.io/cloud-builders/docker'
   args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest"]
   waitFor: ['Build app image']
