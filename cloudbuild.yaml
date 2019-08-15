@@ -1,11 +1,11 @@
 steps:
 - id: 'Build app image'
   name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA', '.' ]
+  args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest', '.']
 
 - id: 'Push image to the registry'
   name: 'gcr.io/cloud-builders/docker'
-  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA"]
+  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest"]
   waitFor: ['Build app image']
 
 - id: 'Deploy app image to the cluster'
@@ -14,7 +14,7 @@ steps:
   - 'set'
   - 'image'
   - 'deployment/flask-demo'
-  - 'flask-demo-container=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA'
+  - 'flask-demo-container=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
