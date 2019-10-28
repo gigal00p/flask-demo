@@ -1,4 +1,3 @@
-# The Docker image contains the following code
 from flask import Flask
 import os
 import socket
