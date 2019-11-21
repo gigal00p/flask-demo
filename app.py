@@ -1,4 +1,3 @@
-# The Docker image contains the following code
 from flask import Flask
 import os
 import socket
@@ -9,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    html = "<h1>Welcome to cloud dear user!</h1>"
+    html = "<h1>SBCL rocks!</h1>"
     return html
 
 if __name__ == "__main__":

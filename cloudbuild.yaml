@@ -1,11 +1,16 @@
 steps:
 - id: 'Build app image'
   name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA', '.' ]
+  args: [ 'build', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA', '-t', 'gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest', '.']
 
-- id: 'Push image to the registry'
+- id: 'Push image with SHA to the registry'
   name: 'gcr.io/cloud-builders/docker'
   args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA"]
+  waitFor: ['Build app image']
+
+- id: 'Push latest image to the registry'
+  name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest"]
   waitFor: ['Build app image']
 
 - id: 'Deploy app image to the cluster'
@@ -13,9 +18,22 @@ steps:
   args:
   - 'set'
   - 'image'
-  - 'pod/terraform-flask'
-  - 'flask-demo=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:$SHORT_SHA'
+  - 'deployment/flask-demo'
+  - 'flask-demo-container=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
-  waitFor: ['Push image to the registry']
+  waitFor: ['Push latest image to the registry']
+
+- id: 'Force image reload'
+  name: 'gcr.io/cloud-builders/kubectl'
+  args:
+  - 'set'
+  - 'image'
+  - 'deployment/flask-demo'
+  - 'flask-demo-container=gcr.io/bubbly-display-245508/github.com/gigal00p/flask-demo:latest'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=kubeycluster'
+  waitFor: ['Deploy app image to the cluster']
+  
